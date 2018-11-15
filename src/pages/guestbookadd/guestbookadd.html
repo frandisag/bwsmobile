@@ -1,0 +1,68 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Add Guest</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="next()">Next <ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-slides #signupSlider>
+    <ion-slide>
+      <ion-list no-line padding style="padding-top: 0px">
+        <form style="padding-top: 0px" [formGroup]="slideOneForm">
+          <ion-label stacked text-left color="button">Tanggal Konsumen Datang : </ion-label>
+          <ion-item no-line class="rounded">
+            <!-- <ion-label>Tanggal Pengisian</ion-label> -->
+            <ion-datetime displayFormat="DD MMMM YYYY" formControlName="Date"></ion-datetime>
+            <button ion-button icon-only style="margin: auto; padding-right: 5px" clear item-right disabled>
+              <ion-icon name="ios-calendar-outline" color="button" style="font-size: 2.5em"></ion-icon>
+            </button>
+          </ion-item>
+          <ion-label stacked text-left color="button">Nama Konsumen :</ion-label>
+          <ion-item no-line class="rounded">
+            <ion-input block round type="text" placeholder="" formControlName="namaKonsumen"></ion-input>
+          </ion-item>
+          <ion-label stacked text-left color="button">Nama Jalan :</ion-label>
+          <ion-item no-line class="rounded">
+            <ion-input block round type="text" placeholder="" formControlName="namaJalan"></ion-input>
+          </ion-item>
+          <ion-label stacked text-left color="button">Nama Konsumen :</ion-label>
+          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+            <ion-input block round type="text" placeholder="" formControlName="namaKonsumen"></ion-input>
+          </ion-item>
+        </form>
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      <br />
+      <ion-list no-lines>
+        <form [formGroup]="slideTwoForm">
+          <ion-item>
+            <ion-label floating>Username</ion-label>
+            <ion-input formControlName="username" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Privacy</ion-label>
+            <ion-select formControlName="privacy">
+              <ion-option value="public" checked="true">Public</ion-option>
+              <ion-option value="friends">Friends Only</ion-option>
+              <ion-option value="private">Private</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Bio</ion-label>
+            <ion-textarea formControlName="bio"></ion-textarea>
+          </ion-item>
+        </form>
+      </ion-list>
+      <button ion-button full color="primary" (click)="save()">Create Account!</button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Guest Book</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-fab right bottom #fab4>
+    <button ion-fab color="primary"><ion-icon name="arrow-dropup"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (tap)="add()"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab (tap)="filter()"><ion-icon name="ios-funnel"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

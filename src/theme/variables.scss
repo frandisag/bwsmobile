@@ -5,6 +5,39 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
+$material-design: "../assets/fonts/materialdesign";
+
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url($material-design + '/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url($material-design + '/MaterialIcons-Regular.woff2') format('woff2'),
+    url($material-design + '/MaterialIcons-Regular.woff') format('woff'),
+    url($material-design + '/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
 
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
@@ -13,6 +46,12 @@ $app-direction: ltr;
 
 
 @import "ionic.globals";
+
+$text-input-md-highlight-color-invalid: transparent;
+$text-input-md-highlight-color-valid: transparent;
+$text-input-md-show-invalid-highlight: transparent;
+$text-input-md-highlight-color: transparent;
+$text-input-md-show-valid-highlight: transparent;
 
 
 // Shared Variables
@@ -34,7 +73,7 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #FE0303,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
