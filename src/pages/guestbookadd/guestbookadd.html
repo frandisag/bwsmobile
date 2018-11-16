@@ -31,9 +31,19 @@
           <ion-item no-line class="rounded">
             <ion-input block round type="text" placeholder="" formControlName="namaJalan"></ion-input>
           </ion-item>
-          <ion-label stacked text-left color="button">Nama Konsumen :</ion-label>
+          <ion-label stacked text-left color="primary">Nama Provinsi :</ion-label>
           <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
-            <ion-input block round type="text" placeholder="" formControlName="namaKonsumen"></ion-input>
+            <ion-label><span style="display: none;">Nama Provinsi</span></ion-label>
+            <ionic-selectable
+              item-content
+              formControlName="port"
+              itemValueField="id"
+              itemTextField="name"
+              [items]="ports"
+              [canSearch]="true"
+              (onChange)="portChange($event)"
+              [isMultiple]="false">
+            </ionic-selectable>
           </ion-item>
         </form>
       </ion-list>

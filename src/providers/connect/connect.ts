@@ -3,8 +3,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 //let apiUrl = "http://api.mondr1ve.com/mondrive/";
-let apiUrl = "http://bws.com/api/";
-//let apiUrl = "http://10.0.2.2:8000/api/";
+//let apiUrl = "http://bws.com/api/";
+let apiUrl = "http://10.0.2.2:8000/api/";
 
 @Injectable()
 export class ConnectProvider {

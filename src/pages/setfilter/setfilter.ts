@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, Platform, ToastController } from 'ionic-angular';
+import { IonicSelectableComponent } from 'ionic-selectable';
 
-/**
- * Generated class for the SetfilterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+class Port {
+  public id: number;
+  public name: string;
+}
 
 @Component({
   selector: 'page-setfilter',
@@ -14,7 +13,18 @@ import { NavController, NavParams, ViewController, Platform, ToastController } f
 })
 export class SetfilterPage {
 
+  ports: Port[];
+  port: Port;
+
   public unregisterBackButtonAction: any;
+
+  namaProvinsi = []
+
+  listProvinsi = [
+    'Jawa Barat',
+    'Jawa Tengah',
+    'Jawa Timur'
+  ]
 
   constructor(
     public navCtrl: NavController,
@@ -22,6 +32,18 @@ export class SetfilterPage {
     public platform: Platform,
     public toastController: ToastController,
     public navParams: NavParams) {
+      this.ports = [
+        { id: 1, name: 'Tokai' },
+        { id: 2, name: 'Vladivostok' },
+        { id: 3, name: 'Navlakhi' }
+      ];
+  }
+
+  portChange(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    console.log('port:', event.value);
   }
 
   dismiss() {

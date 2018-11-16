@@ -19,5 +19,13 @@
 
 
 <ion-content padding>
-
+    <ionic-selectable
+      item-content
+      [(ngModel)]="port"
+      [items]="ports"
+      itemValueField="id"
+      itemTextField="name"
+      [canSearch]="true"
+      (onChange)="portChange($event)">
+    </ionic-selectable>
 </ion-content>

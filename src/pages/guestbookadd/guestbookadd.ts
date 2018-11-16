@@ -1,19 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ViewController, Platform, ToastController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
+import { IonicSelectableComponent } from 'ionic-selectable';
 
-/**
- * Generated class for the GuestbookaddPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+class Port {
+  public id: number;
+  public name: string;
+}
 
 @Component({
   selector: 'page-guestbookadd',
   templateUrl: 'guestbookadd.html',
 })
 export class GuestbookaddPage {
+
+  //ports: Port[];
+  port: Port;
 
   public unregisterBackButtonAction: any;
   @ViewChild('signupSlider') signupSlider: any;
@@ -27,6 +29,16 @@ export class GuestbookaddPage {
     "token":""
   };
 
+  ports = [
+    { id: 1, name: 'Jawa Barat' },
+    { id: 2, name: 'Jawa Timur' },
+    { id: 3, name: 'Jawa Tengah' }
+  ]
+
+  params = {
+    namaProvinsi: []
+  }
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
@@ -39,15 +51,24 @@ export class GuestbookaddPage {
 
   init(){
     this.slideOneForm = this.formBuilder.group({
+      ports: new FormControl(this.ports),
       Date: new Date().toISOString(),
       namaKonsumen: '',
-      namaJalan: ''
+      namaJalan: '',
+      port: new FormControl(this.params.namaProvinsi)
     });
     this.slideTwoForm = this.formBuilder.group({
       username: [''],
       privacy: [''],
       bio: ['']
     });
+  }
+
+  portChange(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    console.log(event.value);
   }
 
   next(){

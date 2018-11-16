@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ModalController, Platform, ViewController, Navbar } from 'ionic-angular';
 
 import { GuestbookaddPage } from '../guestbookadd/guestbookadd'
 import { SetfilterPage } from '../setfilter/setfilter'
@@ -17,15 +17,44 @@ import { SetfilterPage } from '../setfilter/setfilter'
 })
 export class TabsguestbookPage {
 
+  @ViewChild(Navbar) navBar:Navbar;
+
+  public unregisterBackButtonAction: any;
+
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
+    public viewCtrl: ViewController,
+    public platform:Platform,
     public navParams: NavParams) {
     this.init()
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsguestbookPage');
+    this.navBar.backButtonClick = (e:UIEvent) => {
+      this.viewCtrl.dismiss({},"",{
+        animate: true,
+        animation: 'ios-transition'
+      });
+    };
+  }
+
+  ionViewWillLeave() {
+    // Unregister the custom back button action for this page
+    this.unregisterBackButtonAction && this.unregisterBackButtonAction();
+  }
+
+  public initializeBackButtonCustomHandler(): void {
+    this.unregisterBackButtonAction = this.platform.registerBackButtonAction(() => {
+        this.customHandleBackButton();
+    }, 10);
+  }
+
+  private customHandleBackButton(): void {
+    this.viewCtrl.dismiss({},"",{
+    	animate: true,
+    	animation: 'ios-transition'
+    });
   }
 
   filter(){
