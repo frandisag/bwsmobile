@@ -13,7 +13,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="listGuest">
-    <ion-item *ngFor="let item of listGuest" (tap)="opendetail(item,carData)">
+    <ion-item *ngFor="let item of listGuest" (tap)="opendetail(item)">
       <ion-thumbnail item-start style="background-color: #0066b1" class="tumb">
         <div class="tumb" style="font-size: 14px; color: white;">{{item.tanggal_datang | date : 'yyyy'}}</div>
         <div class="tumb" style="font-size: 30px; color: white;"><b>{{item.tanggal_datang | date : 'd'}}</b></div>

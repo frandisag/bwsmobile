@@ -145,6 +145,7 @@ export class GuestbookaddPage {
         'noHp2': this.slideTwoForm.value.noHp2,
         'tanggal_lahir': this.slideTwoForm.value.tanggal_lahir,
         'tempat_lahir': this.slideTwoForm.value.tempat_lahir,
+        'cara_bayar': this.slideTwoForm.value.cara_bayar,
         'source_order': this.slideThreeForm.value.source_order,
         'token': this.param.token
       }

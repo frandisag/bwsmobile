@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ModalController, Platform, ViewController, Navbar, LoadingController, ToastController } from 'ionic-angular';
 
 import { GuestbookaddPage } from '../guestbookadd/guestbookadd'
+import { GuestbookeditPage } from '../guestbookedit/guestbookedit'
 import { SetfilterPage } from '../setfilter/setfilter'
 
 import { ConnectProvider } from '../../providers/connect/connect';
@@ -76,6 +77,18 @@ export class TabsguestbookPage {
     	animate: true,
     	animation: 'ios-transition'
     });
+  }
+
+  opendetail(item){
+    let profileModal = this.modalCtrl.create(GuestbookeditPage,{
+      item: item
+    });
+    profileModal.onDidDismiss(data => {
+      if (data) {
+      	this.init();
+      }
+    });
+    profileModal.present();
   }
 
   doRefresh(refresher){

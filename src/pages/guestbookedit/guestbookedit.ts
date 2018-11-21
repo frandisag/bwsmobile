@@ -18,7 +18,7 @@ export class GuestbookeditPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GuestbookeditPage');
+    console.log(this.navParams.get('item'))
   }
 
 }
