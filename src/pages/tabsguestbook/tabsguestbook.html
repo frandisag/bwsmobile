@@ -4,8 +4,35 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="listGuest">
+    <ion-item *ngFor="let item of listGuest" (tap)="opendetail(item,carData)">
+      <ion-thumbnail item-start style="background-color: #0066b1" class="tumb">
+        <div class="tumb" style="font-size: 14px; color: white;">{{item.tanggal_datang | date : 'yyyy'}}</div>
+        <div class="tumb" style="font-size: 30px; color: white;"><b>{{item.tanggal_datang | date : 'd'}}</b></div>
+        <div class="tumb" style="font-size: 20px; color: white;">{{item.tanggal_datang | date : 'MMM'}}</div>
+      </ion-thumbnail>
+      <h2 style="color: #0066b1;" text-left><b>{{item.nama_konsumen}}</b></h2>
+      <p>{{item.email_konsumen}}</p>
+      <button ion-button clear item-end>
+        <span style="font-size: 11px; font-weight: bolder;"><b>Proses</b></span>
+      </button>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" *ngIf="param.page < param.last_page">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <ion-fab right bottom #fab4>
     <button ion-fab color="primary"><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">

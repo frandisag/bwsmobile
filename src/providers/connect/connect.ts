@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-//let apiUrl = "http://bws.com/api/";
-let apiUrl = "http://10.0.2.2:8000/api/";
+let apiUrl = "http://bws.com/api/";
+//let apiUrl = "http://10.0.2.2:8000/api/";
 
 @Injectable()
 export class ConnectProvider {
@@ -19,6 +19,7 @@ export class ConnectProvider {
         headers.append('Authorization', 'Bearer ' + credentials.token);
 
         let options = new RequestOptions({ headers: headers });
+        delete credentials.token
         this.http.post(apiUrl+type, JSON.stringify(credentials),options).subscribe(res =>{
           resolve(res.json());
         }, (err) =>{

@@ -17,6 +17,7 @@ import { TabsguestbookPage } from '../pages/tabsguestbook/tabsguestbook'
 import { TabspricelistPage } from '../pages/tabspricelist/tabspricelist'
 import { TabsprofilePage } from '../pages/tabsprofile/tabsprofile'
 import { GuestbookaddPage } from '../pages/guestbookadd/guestbookadd'
+import { GuestbookeditPage } from '../pages/guestbookedit/guestbookedit'
 import { SetfilterPage } from '../pages/setfilter/setfilter'
 
 
@@ -32,6 +33,7 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     TabspricelistPage,
     TabsprofilePage,
     GuestbookaddPage,
+    GuestbookeditPage,
     SetfilterPage
   ],
   imports: [
@@ -54,6 +56,7 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     TabspricelistPage,
     TabsprofilePage,
     GuestbookaddPage,
+    GuestbookeditPage,
     SetfilterPage
   ],
   providers: [

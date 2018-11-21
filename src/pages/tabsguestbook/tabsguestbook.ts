@@ -1,15 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, Platform, ViewController, Navbar } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Platform, ViewController, Navbar, LoadingController, ToastController } from 'ionic-angular';
 
 import { GuestbookaddPage } from '../guestbookadd/guestbookadd'
 import { SetfilterPage } from '../setfilter/setfilter'
 
-/**
- * Generated class for the TabsguestbookPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ConnectProvider } from '../../providers/connect/connect';
 
 @Component({
   selector: 'page-tabsguestbook',
@@ -21,13 +16,35 @@ export class TabsguestbookPage {
 
   public unregisterBackButtonAction: any;
 
+  param = {
+    "token":"",
+    "page": 1,
+    "last_page": 0
+  };
+
+  responseData: any;
+  listGuest = [];
+
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
     public platform:Platform,
+    public loadingCtrl: LoadingController,
+    public connect: ConnectProvider,
+    public toastController: ToastController,
     public navParams: NavParams) {
     this.init()
+  }
+
+  presentToast(msg) {
+    let toast = this.toastController.create({
+      message: msg,
+      duration: 2000,
+      position: 'top',
+      dismissOnPageChange: true
+    });
+    toast.present();
   }
 
   ionViewDidLoad() {
@@ -37,6 +54,10 @@ export class TabsguestbookPage {
         animation: 'ios-transition'
       });
     };
+  }
+
+  ionViewDidEnter() {
+    this.initializeBackButtonCustomHandler();
   }
 
   ionViewWillLeave() {
@@ -57,6 +78,34 @@ export class TabsguestbookPage {
     });
   }
 
+  doRefresh(refresher){
+    this.param.page = 1;
+    this.init();
+    refresher.complete();
+  }
+
+  doInfinite(): Promise<any> {
+    this.param.page = this.param.page + 1 ;
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}`).then((data) => {
+          this.responseData = data;
+          if (this.responseData) {
+            for (let i = 0; i < this.responseData.data.length; i++) {
+							const guest = this.responseData.data[i];
+							this.listGuest.push(guest);
+            }
+          }else{
+            this.presentToast(this.responseData.error.text);
+          }
+        },(err)=>{
+          this.presentToast("Connection Problem");
+        })
+        resolve();
+      }, 500);
+    })
+  }
+
   filter(){
     let profileModal = this.modalCtrl.create(SetfilterPage);
     profileModal.onDidDismiss(data => {
@@ -68,7 +117,28 @@ export class TabsguestbookPage {
   }
 
   init(){
-    console.log('init')
+    let loadingPopup = this.loadingCtrl.create({
+      content: 'Loading data...'
+    });
+
+    loadingPopup.present();
+    const localdata = JSON.parse(localStorage.getItem('userData'));
+    this.param.token = localdata.userData.token;
+
+    this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}`).then(data=>{
+      this.responseData = data;
+      if(this.responseData){
+        this.listGuest = this.responseData.data;
+        this.param.last_page = this.responseData.last_page;
+        loadingPopup.dismiss();
+      }else{
+        loadingPopup.dismiss();
+        this.presentToast('Data Tidak Ditemukan')
+      }
+    },(err)=>{
+      loadingPopup.dismiss();
+      this.presentToast("Koneksi Bermasalah");
+    })
   }
 
   add(){

@@ -2,9 +2,15 @@
 
   <ion-navbar color="primary">
     <ion-title>Add Guest</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-right (click)="next()">Next <ion-icon name="arrow-forward"></ion-icon></button>
+    <ion-buttons start *ngIf="param.page != 1">
+      <button ion-button icon-left (tap)="prev()"><ion-icon name="arrow-back"></ion-icon> Prev</button>
     </ion-buttons>
+    <ion-buttons end *ngIf="param.page != 3">
+      <button ion-button icon-right (tap)="next()">Next <ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-buttons>
+    <ion-buttons end *ngIf="param.page == 3">
+        <button ion-button icon-right (tap)="save()">Save <ion-icon name="md-checkmark"></ion-icon></button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -17,22 +23,26 @@
         <form style="padding-top: 0px" [formGroup]="slideOneForm">
           <ion-label stacked text-left color="button">Tanggal Konsumen Datang : </ion-label>
           <ion-item no-line class="rounded">
-            <!-- <ion-label>Tanggal Pengisian</ion-label> -->
-            <ion-datetime displayFormat="DD MMMM YYYY" formControlName="Date"></ion-datetime>
+            <ion-datetime displayFormat="DD MMMM YYYY" formControlName="tanggal_datang"></ion-datetime>
             <button ion-button icon-only style="margin: auto; padding-right: 5px" clear item-right disabled>
               <ion-icon name="ios-calendar-outline" color="button" style="font-size: 2.5em"></ion-icon>
             </button>
           </ion-item>
           <ion-label stacked text-left color="button">Nama Konsumen :</ion-label>
           <ion-item no-line class="rounded">
-            <ion-input block round type="text" placeholder="" formControlName="namaKonsumen"></ion-input>
+            <ion-input block round type="text" placeholder="" formControlName="nama_konsumen"></ion-input>
           </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideOneForm.controls.nama_konsumen.valid  && (slideOneForm.controls.nama_konsumen.dirty || submitAttempt)"
+          >
+            Nama Konsumen is required.
+          </ion-label>
           <ion-label stacked text-left>Nama Provinsi :</ion-label>
           <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
             <ion-label><span style="display: none; width: 10px">Nama Provinsi</span></ion-label>
             <ionic-selectable
               item-content
-              formControlName="namaProvinsi"
+              formControlName="nama_provinsi"
               itemValueField="id"
               itemTextField="name"
               [items]="listProvinsi"
@@ -41,13 +51,18 @@
               [isMultiple]="false">
             </ionic-selectable>
           </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideOneForm.controls.nama_provinsi.valid  && (slideOneForm.controls.nama_provinsi.dirty || submitAttempt)"
+          >
+            Nama Provinsi is required.
+          </ion-label>
           <ion-label stacked text-left>Nama Kabupaten :</ion-label>
           <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
             <ion-label><span style="display: none;">Nama Kabupaten</span></ion-label>
             <ionic-selectable
               item-content
               text-wrap
-              formControlName="namaKabupaten"
+              formControlName="nama_kabupaten"
               itemValueField="id"
               itemTextField="name"
               [items]="listKabupaten"
@@ -56,13 +71,18 @@
               [isMultiple]="false">
             </ionic-selectable>
           </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideOneForm.controls.nama_kabupaten.valid  && (slideOneForm.controls.nama_kabupaten.dirty || submitAttempt)"
+          >
+            Nama Kabupaten is required.
+          </ion-label>
           <ion-label stacked text-left>Nama Kecamatan :</ion-label>
           <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
             <ion-label><span style="display: none;">Nama Kecamatan</span></ion-label>
             <ionic-selectable
               item-content
               text-wrap
-              formControlName="namaKecamatan"
+              formControlName="nama_kecamatan"
               itemValueField="id"
               itemTextField="name"
               [items]="listKecamatan"
@@ -71,13 +91,18 @@
               [isMultiple]="false">
             </ionic-selectable>
           </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideOneForm.controls.nama_kecamatan.valid  && (slideOneForm.controls.nama_kecamatan.dirty || submitAttempt)"
+          >
+            Nama Kecamatan is required.
+          </ion-label>
           <ion-label stacked text-left>Nama Desa :</ion-label>
           <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
             <ion-label><span style="display: none;">Nama Desa</span></ion-label>
             <ionic-selectable
               item-content
               text-wrap
-              formControlName="namaDesa"
+              formControlName="nama_desa"
               itemValueField="id"
               itemTextField="name"
               [items]="listDesa"
@@ -85,37 +110,129 @@
               [isMultiple]="false">
             </ionic-selectable>
           </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideOneForm.controls.nama_desa.valid  && (slideOneForm.controls.nama_desa.dirty || submitAttempt)"
+          >
+            Nama Desa is required.
+          </ion-label>
           <ion-label stacked text-left color="button">Nama Jalan :</ion-label>
-          <ion-item no-line class="rounded">
-            <ion-input block round type="text" placeholder="" formControlName="namaJalan"></ion-input>
+          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+            <ion-input block round type="text" placeholder="" formControlName="nama_jalan"></ion-input>
           </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideOneForm.controls.nama_jalan.valid  && (slideOneForm.controls.nama_jalan.dirty || submitAttempt)"
+          >
+            Nama Jalan is required.
+          </ion-label>
         </form>
       </ion-list>
     </ion-slide>
 
     <ion-slide>
-      <br />
-      <ion-list no-lines>
-        <form [formGroup]="slideTwoForm">
-          <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input formControlName="username" type="text"></ion-input>
+      <ion-list no-line padding style="padding-top: 0px">
+        <form style="padding-top: 0px" [formGroup]="slideTwoForm">
+          <ion-label stacked text-left color="button">Email Konsumen :</ion-label>
+          <ion-item no-line class="rounded">
+            <ion-input block round type="email" placeholder="" formControlName="email_konsumen"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label floating>Privacy</ion-label>
-            <ion-select formControlName="privacy">
-              <ion-option value="public" checked="true">Public</ion-option>
-              <ion-option value="friends">Friends Only</ion-option>
-              <ion-option value="private">Private</ion-option>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideTwoForm.controls.email_konsumen.valid  && (slideTwoForm.controls.email_konsumen.dirty || submitAttempt)"
+          >
+            Email Konsumen is required.
+          </ion-label>
+          <ion-label stacked text-left color="button">Tempat Lahir :</ion-label>
+          <ion-item no-line class="rounded">
+            <ion-input block round type="text" placeholder="" formControlName="tempat_lahir"></ion-input>
+          </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideTwoForm.controls.tempat_lahir.valid  && (slideTwoForm.controls.tempat_lahir.dirty || submitAttempt)"
+          >
+            Tempat Lahir is required.
+          </ion-label>
+          <ion-label stacked text-left color="button">Tanggal Lahir : </ion-label>
+          <ion-item no-line class="rounded">
+            <ion-datetime displayFormat="DD MMMM YYYY" formControlName="tanggal_lahir"></ion-datetime>
+            <button ion-button icon-only style="margin: auto; padding-right: 5px" clear item-right disabled>
+              <ion-icon name="ios-calendar-outline" color="button" style="font-size: 2.5em"></ion-icon>
+            </button>
+          </ion-item>
+          <ion-label stacked text-left color="button">No. Hp 1 : </ion-label>
+          <ion-item no-line class="rounded">
+            <ion-input block round type="tel" placeholder="" formControlName="noHp1"></ion-input>
+          </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideTwoForm.controls.noHp1.valid  && (slideTwoForm.controls.noHp1.dirty || submitAttempt)"
+          >
+            No. Hp 1 is required.
+          </ion-label>
+          <ion-label stacked text-left color="button">No. Hp 2 : </ion-label>
+          <ion-item no-line class="rounded">
+            <ion-input block round type="tel" placeholder="" formControlName="noHp2"></ion-input>
+          </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideTwoForm.controls.noHp2.valid  && (slideTwoForm.controls.noHp2.dirty || submitAttempt)"
+          >
+            No. Hp 2 is required.
+          </ion-label>
+          <ion-label stacked text-left>Minat Motor :</ion-label>
+          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+            <ion-label><span style="display: none;">Minat Motor</span></ion-label>
+            <ionic-selectable
+              item-content
+              text-wrap
+              formControlName="nama_motor"
+              itemValueField="id"
+              itemTextField="motor_name"
+              [items]="listMotor"
+              [canSearch]="true"
+              [isMultiple]="false">
+            </ionic-selectable>
+          </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideTwoForm.controls.nama_motor.valid  && (slideTwoForm.controls.nama_motor.dirty || submitAttempt)"
+          >
+            Minat Motor is required.
+          </ion-label>
+          <ion-label stacked text-left color="button">Cara Bayar : </ion-label>
+          <ion-item no-line text-left class="rounded">
+            <ion-label><span style="display: none;">Cara Bayar</span></ion-label>
+            <ion-select formControlName="cara_bayar" text-right>
+              <ion-option *ngFor="let bayar of listBayar" [value]="bayar">{{bayar}}</ion-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-label floating>Bio</ion-label>
-            <ion-textarea formControlName="bio"></ion-textarea>
-          </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideTwoForm.controls.cara_bayar.valid  && (slideTwoForm.controls.cara_bayar.dirty || submitAttempt)"
+          >
+            Cara Bayar is required.
+          </ion-label>
         </form>
       </ion-list>
-      <button ion-button full color="primary" (click)="save()">Create Account!</button>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list no-line padding style="padding-top: 0px">
+        <form style="padding-top: 0px" [formGroup]="slideThreeForm">
+          <ion-label stacked text-left color="button">Source Order Konsumen :</ion-label>
+          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+            <ion-label><span style="display: none;">Source Order Konsumen</span></ion-label>
+            <ionic-selectable
+              item-content
+              text-wrap
+              formControlName="source_order"
+              itemValueField="id"
+              itemTextField="source_name"
+              [items]="listSource"
+              [canSearch]="true"
+              [isMultiple]="false">
+            </ionic-selectable>
+          </ion-item>
+          <ion-label stacked text-center color="primary" style="margin-top: -1px"
+            *ngIf="!slideThreeForm.controls.source_order.valid  && (slideThreeForm.controls.source_order.dirty || submitAttempt)"
+          >
+            Source Order Konsumen.
+          </ion-label>
+        </form>
+      </ion-list>
     </ion-slide>
 
   </ion-slides>
