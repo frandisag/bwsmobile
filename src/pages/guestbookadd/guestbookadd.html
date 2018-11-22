@@ -9,15 +9,15 @@
       <button ion-button icon-right (tap)="next()">Next <ion-icon name="arrow-forward"></ion-icon></button>
     </ion-buttons>
     <ion-buttons end *ngIf="param.page == 3">
-        <button ion-button icon-right (tap)="save()">Save <ion-icon name="md-checkmark"></ion-icon></button>
-      </ion-buttons>
+      <button ion-button icon-right (tap)="save()">Save <ion-icon name="md-checkmark"></ion-icon></button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-slides #signupSlider>
+  <ion-slides #signupSlider (ionSlideDidChange)="slideChanged()">
     <ion-slide>
       <ion-list no-line padding style="padding-top: 0px">
         <form style="padding-top: 0px" [formGroup]="slideOneForm">

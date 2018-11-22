@@ -53,6 +53,53 @@ export class GuestbookaddPage {
     this.init()
   }
 
+  slideChanged() {
+    let currentIndex = this.signupSlider.getActiveIndex();
+    if(currentIndex == 0){
+      this.param.page = 1
+    }
+    if(currentIndex == 1){
+      this.param.page = 2
+      let loadingPopup = this.loadingCtrl.create({
+        content: 'Loading data...'
+      });
+      loadingPopup.present();
+      this.connect.getData(this.param.token,`getMotor`).then(data=>{
+        this.responseData = data
+        if(this.responseData){
+          this.listMotor = this.responseData;
+          loadingPopup.dismiss();
+        }else{
+          loadingPopup.dismiss();
+          this.presentToast('Data Tidak Ditemukan')
+        }
+      },(err)=>{
+        loadingPopup.dismiss();
+        this.presentToast('Koneksi Bermasalah')
+      })
+    }
+    if(currentIndex == 2){
+      this.param.page = 3
+      let loadingPopup = this.loadingCtrl.create({
+        content: 'Loading data...'
+      });
+      loadingPopup.present();
+      this.connect.getData(this.param.token,`getSource`).then(data=>{
+        this.responseData = data
+        if(this.responseData){
+          this.listSource = this.responseData;
+          loadingPopup.dismiss();
+        }else{
+          loadingPopup.dismiss();
+          this.presentToast('Data Tidak Ditemukan')
+        }
+      },(err)=>{
+        loadingPopup.dismiss();
+        this.presentToast('Koneksi Bermasalah')
+      })
+    }
+  }
+
   presentToast(msg) {
     let toast = this.toastController.create({
       message: msg,
@@ -87,10 +134,6 @@ export class GuestbookaddPage {
     })
 
     this.slideOneForm = this.formBuilder.group({
-      listProvinsi: new FormControl(this.listProvinsi),
-      listKabupaten: new FormControl(this.listKabupaten),
-      listKecamatan: new FormControl(this.listKecamatan),
-      listDesa: new FormControl(this.listDesa),
       tanggal_datang: new Date().toISOString(),
       nama_konsumen: ['',Validators.required],
       nama_jalan: ['',Validators.required],
@@ -103,14 +146,12 @@ export class GuestbookaddPage {
       email_konsumen: ['',Validators.required],
       tempat_lahir: ['',Validators.required],
       tanggal_lahir: new Date().toISOString(),
-      listSource: new FormControl(this.listSource),
       noHp1: ['',Validators.required],
       noHp2: '',
       nama_motor: ['',Validators.required],
       cara_bayar: ['',Validators.required]
     });
     this.slideThreeForm = this.formBuilder.group({
-      listSource: new FormControl(this.listSource),
       source_order: ['',Validators.required]
     });
   }
@@ -236,47 +277,7 @@ export class GuestbookaddPage {
 
   next(){
     this.param.page = this.param.page + 1
-    if(this.param.page == 2){
-      let loadingPopup = this.loadingCtrl.create({
-        content: 'Loading data...'
-      });
-      loadingPopup.present();
-      this.connect.getData(this.param.token,`getMotor`).then(data=>{
-        this.responseData = data
-        if(this.responseData){
-          this.listMotor = this.responseData;
-          this.signupSlider.slideNext();
-          loadingPopup.dismiss();
-        }else{
-          loadingPopup.dismiss();
-          this.presentToast('Data Tidak Ditemukan')
-        }
-      },(err)=>{
-        loadingPopup.dismiss();
-        this.presentToast('Koneksi Bermasalah')
-      })
-    }
-
-    if(this.param.page == 3){
-      let loadingPopup = this.loadingCtrl.create({
-        content: 'Loading data...'
-      });
-      loadingPopup.present();
-      this.connect.getData(this.param.token,`getSource`).then(data=>{
-        this.responseData = data
-        if(this.responseData){
-          this.listSource = this.responseData;
-          this.signupSlider.slideNext();
-          loadingPopup.dismiss();
-        }else{
-          loadingPopup.dismiss();
-          this.presentToast('Data Tidak Ditemukan')
-        }
-      },(err)=>{
-        loadingPopup.dismiss();
-        this.presentToast('Koneksi Bermasalah')
-      })
-    }
+    this.signupSlider.slideNext();
   }
 
   prev(){
