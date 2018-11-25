@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, Platform, ViewController, Na
 
 import { GuestbookaddPage } from '../guestbookadd/guestbookadd'
 import { GuestbookeditPage } from '../guestbookedit/guestbookedit'
+import { GuestfollowupPage } from '../guestfollowup/guestfollowup'
 import { SetfilterPage } from '../setfilter/setfilter'
 
 import { ConnectProvider } from '../../providers/connect/connect';
@@ -18,11 +19,14 @@ export class TabsguestbookPage {
   public unregisterBackButtonAction: any;
 
   param = {
+    "startdate": "",
+    "enddate": "",
     "token":"",
     "page": 1,
     "last_page": 0
   };
 
+  color;
   responseData: any;
   listGuest = [];
 
@@ -91,6 +95,15 @@ export class TabsguestbookPage {
     profileModal.present();
   }
 
+  openproses(item){
+    this.navCtrl.push(GuestfollowupPage,{
+      item: item
+    },{
+      animate: true,
+      animation: 'ios-transition'
+    });
+  }
+
   doRefresh(refresher){
     this.param.page = 1;
     this.init();
@@ -101,7 +114,7 @@ export class TabsguestbookPage {
     this.param.page = this.param.page + 1 ;
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}`).then((data) => {
+        this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}&startdate=${this.param.startdate}&enddate=${this.param.enddate}`).then((data) => {
           this.responseData = data;
           if (this.responseData) {
             for (let i = 0; i < this.responseData.data.length; i++) {
@@ -120,10 +133,37 @@ export class TabsguestbookPage {
   }
 
   filter(){
-    let profileModal = this.modalCtrl.create(SetfilterPage);
+    let profileModal = this.modalCtrl.create(SetfilterPage,{
+      startdate: this.param.startdate,
+      enddate: this.param.enddate
+    });
     profileModal.onDidDismiss(data => {
       if (data) {
-      	this.init();
+        let loadingPopup = this.loadingCtrl.create({
+          content: 'Loading data...'
+        });
+        if (data.startdate != "" && data.enddate != ""){
+          this.color="primary";
+        }else{
+          this.color="light";
+        }
+        this.param.startdate = data.startdate
+        this.param.enddate = data.enddate
+        loadingPopup.present();
+      	this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}&startdate=${this.param.startdate}&enddate=${this.param.enddate}`).then(data=>{
+          this.responseData = data;
+          if(this.responseData){
+            this.listGuest = this.responseData.data;
+            this.param.last_page = this.responseData.last_page;
+            loadingPopup.dismiss();
+          }else{
+            loadingPopup.dismiss();
+            this.presentToast('Data Tidak Ditemukan')
+          }
+        },(err)=>{
+          loadingPopup.dismiss();
+          this.presentToast("Koneksi Bermasalah");
+        })
       }
     });
     profileModal.present();
@@ -136,10 +176,14 @@ export class TabsguestbookPage {
 
     loadingPopup.present();
     const localdata = JSON.parse(localStorage.getItem('userData'));
-    this.param.token = localdata.userData.token;
 
-    this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}`).then(data=>{
+    this.param.token = localdata.userData.token;
+    this.param.startdate = "";
+    this.param.enddate = "";
+
+    this.connect.getData(this.param.token,`getListGuest?page=${this.param.page}&startdate=${this.param.startdate}&enddate=${this.param.enddate}`).then(data=>{
       this.responseData = data;
+      this.color="light";
       if(this.responseData){
         this.listGuest = this.responseData.data;
         this.param.last_page = this.responseData.last_page;

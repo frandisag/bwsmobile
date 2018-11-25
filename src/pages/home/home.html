@@ -19,9 +19,14 @@
   </ion-refresher>
   <ion-row class="middlerow" padding>
     <ion-col width-100 text-center>
-      <div><img src="assets/imgs/chatterplace.png" class="imgFoto"></div>
+      <div><img *ngIf="userData.foto_profile === ''" class="imgFoto" src="assets/imgs/chatterplace.png"></div>
+      <div><img *ngIf="userData.foto_profile !== ''" class="imgFoto" src="{{userData.foto_profile}}"></div>
       <div class="nickname">{{userData.nama_sales}}</div>
-      <div class="car">{{userData.lokasi}}</div>
+      <div class="car">
+        <span *ngFor="let lok of userData.lokasi; let last = last;">
+          {{lok.nama_lokasi}}<span *ngIf="!last">,</span>
+        </span>
+      </div>
     </ion-col>
   </ion-row>
   <ion-row padding>
@@ -31,7 +36,7 @@
           <ion-badge color="primary">5</ion-badge>
           <ion-card  padding text-center (tap)="openDataCustomer()">
             <i class="material-icons" style="font-size: 80px; color: #DCD5F2">storage</i>
-            <div>Data Customer</div>
+            <div>Data Sales</div>
           </ion-card>
         </ion-col>
         <ion-col col-6>

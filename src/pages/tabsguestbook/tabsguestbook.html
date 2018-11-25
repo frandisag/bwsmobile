@@ -13,15 +13,15 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="listGuest">
-    <ion-item *ngFor="let item of listGuest" (tap)="opendetail(item)">
-      <ion-thumbnail item-start style="background-color: #0066b1" class="tumb">
+    <ion-item *ngFor="let item of listGuest">
+      <ion-thumbnail item-start style="background-color: #0066b1" class="tumb" (tap)="opendetail(item)">
         <div class="tumb" style="font-size: 14px; color: white;">{{item.tanggal_datang | date : 'yyyy'}}</div>
         <div class="tumb" style="font-size: 30px; color: white;"><b>{{item.tanggal_datang | date : 'd'}}</b></div>
         <div class="tumb" style="font-size: 20px; color: white;">{{item.tanggal_datang | date : 'MMM'}}</div>
       </ion-thumbnail>
-      <h2 style="color: #0066b1;" text-left><b>{{item.nama_konsumen}}</b></h2>
-      <p>{{item.email_konsumen}}</p>
-      <button ion-button clear item-end>
+      <h2 style="color: #0066b1;" text-left (tap)="opendetail(item)"><b>{{item.nama_konsumen}}</b></h2>
+      <p (tap)="opendetail(item)">{{item.email_konsumen}}</p>
+      <button ion-button clear item-end (tap)="openproses(item)">
         <span style="font-size: 11px; font-weight: bolder;"><b>Proses</b></span>
       </button>
     </ion-item>
@@ -37,7 +37,7 @@
     <button ion-fab color="primary"><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab (tap)="add()"><ion-icon name="add"></ion-icon></button>
-      <button ion-fab (tap)="filter()"><ion-icon name="ios-funnel"></ion-icon></button>
+      <button ion-fab [color]="color" (tap)="filter()"><ion-icon name="ios-funnel"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

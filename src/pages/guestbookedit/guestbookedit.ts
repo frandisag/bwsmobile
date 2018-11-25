@@ -27,7 +27,9 @@ export class GuestbookeditPage {
   submitAttempt: boolean = false;
   param = {
     "token":"",
-    "page": 1
+    "page": 1,
+    "id": 0,
+    "sales_organizational_id":0
   };
 
   guestData: any
@@ -117,8 +119,11 @@ export class GuestbookeditPage {
 
     loadingPopup.present();
     const localdata = JSON.parse(localStorage.getItem('userData'));
-    this.param.token = localdata.userData.token;
     const guest = this.navParams.get('item')
+
+    this.param.token = localdata.userData.token;
+    this.param.sales_organizational_id = localdata.userData.sales_organizational_id
+    this.param.id = guest.id;
 
     this.slideOneForm = this.formBuilder.group({
       tanggal_datang: new Date().toISOString(),
@@ -247,6 +252,55 @@ export class GuestbookeditPage {
       loadingPopup.dismiss();
       this.presentToast('Koneksi Bermasalah')
     })
+  }
+
+  edit(){
+    this.submitAttempt = true;
+
+    if(!this.slideOneForm.valid){
+      this.param.page = 1
+      this.signupSlider.slideTo(0);
+    }
+    else if(!this.slideTwoForm.valid){
+      this.param.page = 2
+      this.signupSlider.slideTo(1);
+    }
+    else if(!this.slideThreeForm.valid){
+      this.param.page = 2
+      this.signupSlider.slideTo(1);
+    }
+    else {
+      const sendData = {
+        'id': this.param.id,
+        'tanggal_datang': this.slideOneForm.value.tanggal_datang,
+        'nama_desa': this.slideOneForm.value.nama_desa,
+        'nama_jalan': this.slideOneForm.value.nama_jalan,
+        'nama_kabupaten': this.slideOneForm.value.nama_kabupaten,
+        'nama_kecamatan': this.slideOneForm.value.nama_kecamatan,
+        'nama_konsumen': this.slideOneForm.value.nama_konsumen,
+        'nama_provinsi': this.slideOneForm.value.nama_provinsi,
+        'email_konsumen': this.slideTwoForm.value.email_konsumen,
+        'nama_motor': this.slideTwoForm.value.nama_motor,
+        'noHp1': this.slideTwoForm.value.noHp1,
+        'noHp2': this.slideTwoForm.value.noHp2,
+        'tanggal_lahir': this.slideTwoForm.value.tanggal_lahir,
+        'tempat_lahir': this.slideTwoForm.value.tempat_lahir,
+        'cara_bayar': this.slideTwoForm.value.cara_bayar,
+        'source_order': this.slideThreeForm.value.source_order,
+        'token': this.param.token,
+        'sales_organizational_id': this.param.sales_organizational_id
+      }
+      this.connect.postData(sendData,'editGuest').then(data=>{
+        this.responseData = data
+        if(this.responseData.success){
+          this.viewCtrl.dismiss(this.responseData.success);
+        }else{
+          this.presentToast('Mohon Coba Kembali')
+        }
+      },(err)=>{
+        this.presentToast('Koneksi Bermasalah')
+      })
+    }
   }
 
   provinsiChange(event: {

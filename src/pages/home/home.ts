@@ -14,7 +14,9 @@ import { ConnectProvider } from '../../providers/connect/connect';
 })
 export class HomePage {
 
-  userData;
+  userData = {
+    "foto_profile" : ""
+  }
   responseData;
   param = {
     "token":""
@@ -39,15 +41,18 @@ export class HomePage {
       content: 'Loading data...'
     });
     loadingPopup.present();
-  	const localdata = JSON.parse(localStorage.getItem('userData'));
-  	this.userData = localdata.userData;
 
+    const localdata = JSON.parse(localStorage.getItem('userData'));
     this.param.token = localdata.userData.token;
+
     this.connect.postData(this.param, "getDetailsHome").then((result) =>{
       this.responseData = result;
 
       if(this.responseData.userData){
         this.userData = this.responseData.userData
+        if(this.userData.foto_profile != ''){
+          this.userData.foto_profile = `http://bws.com/storage/${this.userData.foto_profile}`
+        }
       }
       loadingPopup.dismiss();
     }, (err) => {

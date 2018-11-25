@@ -2,11 +2,32 @@
 
   <ion-navbar color="primary">
     <ion-title>Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-right (tap)="save()">Save <ion-icon name="md-checkmark"></ion-icon></button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <div text-center padding-top class="profile-image" (tap)="editimage()">
+    <img *ngIf="userProfile.foto_profile === ''" style="text-align: center;" src="assets/imgs/chatterplace.png" >
+    <img *ngIf="userProfile.foto_profile !== ''" style="text-align: center;" [src]="userProfile.foto_profile" >
+  </div>
+  <div text-center>
+    Tap on your pic to change it.
+  </div>
+  <ion-label stacked text-left color="button">Email :</ion-label>
+  <ion-item no-line class="rounded">
+    <ion-input block round type="text" placeholder="" [(ngModel)]="userProfile.email"></ion-input>
+  </ion-item>
+  <ion-label stacked text-left color="button">Nama :</ion-label>
+  <ion-item no-line class="rounded">
+    <ion-input block round type="text" placeholder="" [(ngModel)]="userProfile.nama_sales"></ion-input>
+  </ion-item>
+  <ion-label stacked text-left color="button">No Telp :</ion-label>
+  <ion-item no-line class="rounded">
+    <ion-input block round type="text" placeholder="" [(ngModel)]="userProfile.no_telepon"></ion-input>
+  </ion-item>
 </ion-content>

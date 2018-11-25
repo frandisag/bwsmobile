@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ViewController, Platform, ToastController, LoadingController } from 'ionic-angular';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { IonicSelectableComponent } from 'ionic-selectable';
 
 import { ConnectProvider } from '../../providers/connect/connect';
@@ -28,7 +28,8 @@ export class GuestbookaddPage {
   submitAttempt: boolean = false;
   param = {
     "token":"",
-    "page": 1
+    "page": 1,
+    "sales_organizational_id": 0
   };
 
   responseData: any
@@ -118,6 +119,7 @@ export class GuestbookaddPage {
     loadingPopup.present();
     const localdata = JSON.parse(localStorage.getItem('userData'));
     this.param.token = localdata.userData.token;
+    this.param.sales_organizational_id = localdata.userData.sales_organizational_id;
 
     this.connect.getData(this.param.token,'getPropinsi').then(data=>{
       this.responseData = data;
@@ -188,7 +190,8 @@ export class GuestbookaddPage {
         'tempat_lahir': this.slideTwoForm.value.tempat_lahir,
         'cara_bayar': this.slideTwoForm.value.cara_bayar,
         'source_order': this.slideThreeForm.value.source_order,
-        'token': this.param.token
+        'token': this.param.token,
+        'sales_organizational_id': this.param.sales_organizational_id
       }
       this.connect.postData(sendData,'createGuest').then(data=>{
         this.responseData = data

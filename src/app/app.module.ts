@@ -18,6 +18,8 @@ import { TabspricelistPage } from '../pages/tabspricelist/tabspricelist'
 import { TabsprofilePage } from '../pages/tabsprofile/tabsprofile'
 import { GuestbookaddPage } from '../pages/guestbookadd/guestbookadd'
 import { GuestbookeditPage } from '../pages/guestbookedit/guestbookedit'
+import { GuestfollowupPage } from '../pages/guestfollowup/guestfollowup'
+import { GuestfollowupaddPage } from "../pages/guestfollowupadd/guestfollowupadd";
 import { SetfilterPage } from '../pages/setfilter/setfilter'
 
 
@@ -34,7 +36,9 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     TabsprofilePage,
     GuestbookaddPage,
     GuestbookeditPage,
-    SetfilterPage
+    SetfilterPage,
+    GuestfollowupPage,
+    GuestfollowupaddPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,9 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     TabsprofilePage,
     GuestbookaddPage,
     GuestbookeditPage,
-    SetfilterPage
+    SetfilterPage,
+    GuestfollowupPage,
+    GuestfollowupaddPage
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,9 @@
 <ion-header>
 
   <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (tap)="dismiss()"><ion-icon name="ios-close"></ion-icon></button>
+    </ion-buttons>
     <ion-title>Add Guest</ion-title>
     <ion-buttons start *ngIf="param.page != 1">
       <button ion-button icon-left (tap)="prev()"><ion-icon name="arrow-back"></ion-icon> Prev</button>

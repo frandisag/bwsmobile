@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, Platform, ToastController } from 'ionic-angular';
-import { IonicSelectableComponent } from 'ionic-selectable';
 
-class Port {
-  public id: number;
-  public name: string;
-}
 
 @Component({
   selector: 'page-setfilter',
@@ -13,18 +8,12 @@ class Port {
 })
 export class SetfilterPage {
 
-  ports: Port[];
-  port: Port;
-
   public unregisterBackButtonAction: any;
 
-  namaProvinsi = []
-
-  listProvinsi = [
-    'Jawa Barat',
-    'Jawa Tengah',
-    'Jawa Timur'
-  ]
+  param = {
+    "startdate": this.navParams.get('startdate'),
+    "enddate": this.navParams.get('enddate')
+  }
 
   constructor(
     public navCtrl: NavController,
@@ -32,18 +21,23 @@ export class SetfilterPage {
     public platform: Platform,
     public toastController: ToastController,
     public navParams: NavParams) {
-      this.ports = [
-        { id: 1, name: 'Tokai' },
-        { id: 2, name: 'Vladivostok' },
-        { id: 3, name: 'Navlakhi' }
-      ];
+
   }
 
-  portChange(event: {
-    component: IonicSelectableComponent,
-    value: any
-  }) {
-    console.log('port:', event.value);
+  filter(){
+    if (this.param.startdate > this.param.enddate) {
+      this.presentToast("Tanggal awal melebihi tanggal akhir");
+    }else{
+      this.viewCtrl.dismiss(this.param);
+    }
+  }
+
+  clearstart() {
+    this.param.startdate = null;
+  }
+
+  clearend() {
+    this.param.enddate = null;
   }
 
   dismiss() {

@@ -1,12 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the TabspricelistPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Navbar, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-tabspricelist',
@@ -14,11 +7,26 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class TabspricelistPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild(Navbar) navBar:Navbar;
+
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController,
+    public navParams: NavParams) {
+    this.init()
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TabspricelistPage');
+    this.navBar.backButtonClick = (e:UIEvent) => {
+      this.viewCtrl.dismiss({},"",{
+        animate: true,
+        animation: 'ios-transition'
+      });
+    };
+  }
+
+  init(){
+    console.log('tab price list')
   }
 
 }

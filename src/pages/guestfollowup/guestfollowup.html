@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{cust.nama_konsumen}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="listFollowUp">
+    <ion-item text-wrap *ngFor="let item of listFollowUp">
+      <ion-thumbnail item-start style="background-color: #0066b1" class="tumb" (tap)="opendetail(item)">
+        <div class="tumb" style="font-size: 14px; color: white;">{{item.tanggal_follow_up | date : 'yyyy'}}</div>
+        <div class="tumb" style="font-size: 30px; color: white;"><b>{{item.tanggal_follow_up | date : 'd'}}</b></div>
+        <div class="tumb" style="font-size: 20px; color: white;">{{item.tanggal_follow_up | date : 'MMM'}}</div>
+      </ion-thumbnail>
+      <p (tap)="opendetail(item)">{{item.note}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" *ngIf="param.page < param.last_page">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (tap)="openfollowup()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (tap)="dismiss()"><ion-icon name="ios-close"></ion-icon></button>
+    </ion-buttons>
+    <ion-title>
+      Add Follow Up
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-right (tap)="save()">Save <ion-icon name="md-checkmark"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding-right padding-left>
+  <ion-label stacked text-left color="button">Tanggal Follow Up : </ion-label>
+  <ion-item no-line class="rounded">
+    <ion-datetime displayFormat="DD MMMM YYYY" [(ngModel)]="param.tanggal_follow_up"></ion-datetime>
+    <button ion-button icon-only style="margin: auto; padding-right: 5px" clear item-right disabled>
+      <ion-icon name="ios-calendar-outline" color="button" style="font-size: 2.5em"></ion-icon>
+    </button>
+  </ion-item>
+  <ion-label stacked text-left color="button">Note :</ion-label>
+  <ion-item no-line class="roundedx">
+    <ion-textarea rows="4" [(ngModel)]="param.note"></ion-textarea>
+  </ion-item>
+</ion-content>
