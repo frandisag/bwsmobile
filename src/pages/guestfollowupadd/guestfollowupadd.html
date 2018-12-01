@@ -7,7 +7,7 @@
     <ion-title>
       Add Follow Up
     </ion-title>
-    <ion-buttons end>
+    <ion-buttons end *ngIf="!history">
       <button ion-button icon-right (tap)="save()">Save <ion-icon name="md-checkmark"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>

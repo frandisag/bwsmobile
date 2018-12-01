@@ -1,12 +1,13 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>Data Customer</ion-title>
+    <ion-title>Data Sales</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <super-tabs toolbarColor="button" toolbarBackground="light" tabsPlacement="top" id="DataSales">
+    <super-tab [root]="page1" title="Open"></super-tab>
+    <super-tab [root]="page2" title="Proses"></super-tab>
+    <super-tab [root]="page3" title="Closed"></super-tab>
+  </super-tabs>
 </ion-content>

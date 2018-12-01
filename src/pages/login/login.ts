@@ -11,8 +11,8 @@ import { MenusPage } from '../menus/menus';
 export class LoginPage {
 
   param = {
-    "email":"ADE@demo.com",
-    "password":"123",
+    "email":"",
+    "password":"",
     "device_token":""
   }
   responseData;

@@ -18,8 +18,12 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content style="margin-top: 0px">
   <ion-list no-line padding>
+    <ion-label stacked text-left color="button">Nama Konsumen :</ion-label>
+    <ion-item no-line class="rounded">
+      <ion-input block round type="text" placeholder="" [(ngModel)]="param.nama_konsumen"></ion-input>
+    </ion-item>
     <ion-label stacked text-left color="button">Dari : </ion-label>
     <ion-item no-line class="rounded">
       <ion-label>Dari</ion-label>

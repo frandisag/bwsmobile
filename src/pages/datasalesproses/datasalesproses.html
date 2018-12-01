@@ -1,0 +1,39 @@
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="listDataSales">
+    <ion-item-sliding *ngFor="let item of listDataSales">
+      <ion-item>
+        <ion-thumbnail item-start style="background-color: #0066b1" class="tumb" (tap)="opendetail(item)">
+          <div class="tumb" style="font-size: 14px; color: white;">{{item.tanggal_datang | date : 'yyyy'}}</div>
+          <div class="tumb" style="font-size: 30px; color: white;"><b>{{item.tanggal_datang | date : 'd'}}</b></div>
+          <div class="tumb" style="font-size: 20px; color: white;">{{item.tanggal_datang | date : 'MMM'}}</div>
+        </ion-thumbnail>
+        <h2 style="color: #0066b1;" text-left (tap)="opendetail(item)"><b>{{item.nama_konsumen}}</b></h2>
+        <p (tap)="opendetail(item)">{{item.email_konsumen}}</p>
+        <button ion-button clear item-end (tap)="openproses(item)">
+          <span style="font-size: 11px; font-weight: bolder;"><b>Proses</b></span>
+        </button>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button style="background-color: #00A65A" (tap)="deal(item)"><ion-icon name="ios-checkbox-outline"></ion-icon>Deal</button>
+        <button ion-button style="background-color: #DD4B39"  (tap)="nodeal(item)"><ion-icon name="ios-close-circle-outline"></ion-icon>No Deal</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" *ngIf="param.page < param.last_page">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-fab right bottom>
+    <button ion-fab [color]="color" (tap)="filter()"><ion-icon name="ios-funnel"></ion-icon></button>
+  </ion-fab>
+</ion-content>

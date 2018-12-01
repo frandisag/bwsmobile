@@ -11,6 +11,7 @@ export class SetfilterPage {
   public unregisterBackButtonAction: any;
 
   param = {
+    "nama_konsumen": this.navParams.get('nama_konsumen'),
     "startdate": this.navParams.get('startdate'),
     "enddate": this.navParams.get('enddate')
   }

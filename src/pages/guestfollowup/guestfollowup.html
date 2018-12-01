@@ -29,7 +29,7 @@
     >
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
-  <ion-fab right bottom>
+  <ion-fab right bottom *ngIf="!history">
     <button ion-fab color="primary" (tap)="openfollowup()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

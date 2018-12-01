@@ -28,6 +28,7 @@ export class GuestfollowupPage {
     "tamu_id": 0
   };
 
+  history: boolean = false;
   responseData: any;
   listFollowUp = [];
 
@@ -73,7 +74,11 @@ export class GuestfollowupPage {
   }
 
   opendetail(item){
-    let profileModal = this.modalCtrl.create(GuestfollowupaddPage,{item: this.cust, detail: item});
+    let profileModal = this.modalCtrl.create(GuestfollowupaddPage,{
+      item: this.cust,
+      detail: item,
+      history: this.navParams.get('history')}
+    );
     profileModal.onDidDismiss(data => {
       if (data) {
       	this.init();
@@ -84,6 +89,7 @@ export class GuestfollowupPage {
 
   init(){
     this.cust = this.navParams.get('item')
+    this.history = this.navParams.get('history')
     let loadingPopup = this.loadingCtrl.create({
       content: 'Loading data...'
     });

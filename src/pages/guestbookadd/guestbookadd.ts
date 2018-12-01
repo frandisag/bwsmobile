@@ -59,36 +59,16 @@ export class GuestbookaddPage {
     if(currentIndex == 0){
       this.param.page = 1
     }
-    if(currentIndex == 1){
-      this.param.page = 2
-      let loadingPopup = this.loadingCtrl.create({
-        content: 'Loading data...'
-      });
-      loadingPopup.present();
-      this.connect.getData(this.param.token,`getMotor`).then(data=>{
-        this.responseData = data
-        if(this.responseData){
-          this.listMotor = this.responseData;
-          loadingPopup.dismiss();
-        }else{
-          loadingPopup.dismiss();
-          this.presentToast('Data Tidak Ditemukan')
-        }
-      },(err)=>{
-        loadingPopup.dismiss();
-        this.presentToast('Koneksi Bermasalah')
-      })
-    }
     if(currentIndex == 2){
       this.param.page = 3
       let loadingPopup = this.loadingCtrl.create({
         content: 'Loading data...'
       });
       loadingPopup.present();
-      this.connect.getData(this.param.token,`getSource`).then(data=>{
-        this.responseData = data
+      this.connect.getData(this.param.token,'getPropinsi').then(data=>{
+        this.responseData = data;
         if(this.responseData){
-          this.listSource = this.responseData;
+          this.listProvinsi = this.responseData;
           loadingPopup.dismiss();
         }else{
           loadingPopup.dismiss();
@@ -96,7 +76,7 @@ export class GuestbookaddPage {
         }
       },(err)=>{
         loadingPopup.dismiss();
-        this.presentToast('Koneksi Bermasalah')
+        this.presentToast("Koneksi Bermasalah");
       })
     }
   }
@@ -121,10 +101,11 @@ export class GuestbookaddPage {
     this.param.token = localdata.userData.token;
     this.param.sales_organizational_id = localdata.userData.sales_organizational_id;
 
-    this.connect.getData(this.param.token,'getPropinsi').then(data=>{
-      this.responseData = data;
+    this.connect.getData(this.param.token,`getMotorSource`).then(data=>{
+      this.responseData = data
       if(this.responseData){
-        this.listProvinsi = this.responseData;
+        this.listMotor = this.responseData.listMotor;
+        this.listSource = this.responseData.listSource;
         loadingPopup.dismiss();
       }else{
         loadingPopup.dismiss();
@@ -132,29 +113,29 @@ export class GuestbookaddPage {
       }
     },(err)=>{
       loadingPopup.dismiss();
-      this.presentToast("Koneksi Bermasalah");
+      this.presentToast('Koneksi Bermasalah')
     })
 
     this.slideOneForm = this.formBuilder.group({
       tanggal_datang: new Date().toISOString(),
       nama_konsumen: ['',Validators.required],
-      nama_jalan: ['',Validators.required],
-      nama_provinsi: ['',Validators.required],
-      nama_kabupaten: ['',Validators.required],
-      nama_kecamatan: ['',Validators.required],
-      nama_desa: ['',Validators.required]
+      noHp1: ['',Validators.required],
+      cara_bayar: ['',Validators.required],
+      nama_motor: ['',Validators.required],
+      source_order: ['',Validators.required]
     });
     this.slideTwoForm = this.formBuilder.group({
-      email_konsumen: ['',Validators.required],
-      tempat_lahir: ['',Validators.required],
+      email_konsumen: [''],
+      tempat_lahir: [''],
       tanggal_lahir: new Date().toISOString(),
-      noHp1: ['',Validators.required],
-      noHp2: '',
-      nama_motor: ['',Validators.required],
-      cara_bayar: ['',Validators.required]
+      noHp2: ['']
     });
     this.slideThreeForm = this.formBuilder.group({
-      source_order: ['',Validators.required]
+      nama_provinsi: [''],
+      nama_kabupaten: [''],
+      nama_kecamatan: [''],
+      nama_desa: [''],
+      nama_jalan: ['']
     });
   }
 
@@ -176,20 +157,23 @@ export class GuestbookaddPage {
     else {
       const sendData = {
         'tanggal_datang': this.slideOneForm.value.tanggal_datang,
-        'nama_desa': this.slideOneForm.value.nama_desa,
-        'nama_jalan': this.slideOneForm.value.nama_jalan,
-        'nama_kabupaten': this.slideOneForm.value.nama_kabupaten,
-        'nama_kecamatan': this.slideOneForm.value.nama_kecamatan,
         'nama_konsumen': this.slideOneForm.value.nama_konsumen,
-        'nama_provinsi': this.slideOneForm.value.nama_provinsi,
+        'noHp1': this.slideOneForm.value.noHp1,
+        'cara_bayar': this.slideOneForm.value.cara_bayar,
+        'nama_motor': this.slideOneForm.value.nama_motor,
+        'source_order': this.slideOneForm.value.source_order,
+
         'email_konsumen': this.slideTwoForm.value.email_konsumen,
-        'nama_motor': this.slideTwoForm.value.nama_motor,
-        'noHp1': this.slideTwoForm.value.noHp1,
-        'noHp2': this.slideTwoForm.value.noHp2,
-        'tanggal_lahir': this.slideTwoForm.value.tanggal_lahir,
         'tempat_lahir': this.slideTwoForm.value.tempat_lahir,
-        'cara_bayar': this.slideTwoForm.value.cara_bayar,
-        'source_order': this.slideThreeForm.value.source_order,
+        'tanggal_lahir': this.slideTwoForm.value.tanggal_lahir,
+        'noHp2': this.slideTwoForm.value.noHp2,
+
+        'nama_provinsi': this.slideThreeForm.value.nama_provinsi,
+        'nama_desa': this.slideThreeForm.value.nama_desa,
+        'nama_jalan': this.slideThreeForm.value.nama_jalan,
+        'nama_kabupaten': this.slideThreeForm.value.nama_kabupaten,
+        'nama_kecamatan': this.slideThreeForm.value.nama_kecamatan,
+
         'token': this.param.token,
         'sales_organizational_id': this.param.sales_organizational_id
       }
@@ -215,7 +199,7 @@ export class GuestbookaddPage {
     });
 
     loadingPopup.present();
-    this.connect.getData(this.param.token,`getDesa?district_id=${this.slideOneForm.value.nama_kecamatan.id}`).then(data=>{
+    this.connect.getData(this.param.token,`getDesa?district_id=${this.slideThreeForm.value.nama_kecamatan.id}`).then(data=>{
       this.responseData = data
       if(this.responseData){
         this.listDesa = this.responseData;
@@ -239,7 +223,7 @@ export class GuestbookaddPage {
     });
 
     loadingPopup.present();
-    this.connect.getData(this.param.token,`getKecamatan?regency_id=${this.slideOneForm.value.nama_kabupaten.id}`).then(data=>{
+    this.connect.getData(this.param.token,`getKecamatan?regency_id=${this.slideThreeForm.value.nama_kabupaten.id}`).then(data=>{
       this.responseData = data
       if(this.responseData){
         this.listKecamatan = this.responseData;
@@ -263,7 +247,7 @@ export class GuestbookaddPage {
     });
 
     loadingPopup.present();
-    this.connect.getData(this.param.token,`getKabupaten?province_id=${this.slideOneForm.value.nama_provinsi.id}`).then(data=>{
+    this.connect.getData(this.param.token,`getKabupaten?province_id=${this.slideThreeForm.value.nama_provinsi.id}`).then(data=>{
       this.responseData = data;
       if(this.responseData){
         this.listKabupaten = this.responseData;

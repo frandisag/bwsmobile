@@ -10,6 +10,7 @@ import { ConnectProvider } from '../../providers/connect/connect';
 export class GuestfollowupaddPage {
 
   responseData: any;
+  history: boolean = false;
   param = {
     "id": 0,
     "token":"",
@@ -81,6 +82,7 @@ export class GuestfollowupaddPage {
 
   init(){
     const detail = this.navParams.get('detail')
+    this.history = this.navParams.get('history')
     if(detail){
       this.param.id = detail.id
       this.param.note = detail.note
