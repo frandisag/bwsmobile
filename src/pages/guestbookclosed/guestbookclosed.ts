@@ -47,9 +47,11 @@ export class GuestbookclosedPage {
   presentToast(msg) {
     let toast = this.toastController.create({
       message: msg,
-      duration: 2000,
-      position: 'top',
-      dismissOnPageChange: true
+      duration: 5000,
+      position: 'middle',
+      dismissOnPageChange: true,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
     });
     toast.present();
   }

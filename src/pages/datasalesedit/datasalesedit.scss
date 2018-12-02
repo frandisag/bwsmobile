@@ -3,4 +3,10 @@ page-datasalesedit {
   ion-slide.swiper-slide {
     align-items: flex-start;
   }
+  .item:not(.item-label-stacked):not(.item-label-floating) .ionic-selectable-md .ionic-selectable-value {
+    padding-left: 0px;
+  }
+  .select-md {
+    padding: 13px 8px 13px 0px;
+  }
 }

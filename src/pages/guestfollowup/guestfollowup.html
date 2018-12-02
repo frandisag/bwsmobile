@@ -1,6 +1,14 @@
 <ion-header>
   <ion-navbar>
     <ion-title>{{cust.nama_konsumen}}</ion-title>
+    <ion-buttons end style="padding-right: 5px">
+      <button ion-button icon-right (tap)="call()"><ion-icon name="md-call"></ion-icon></button>
+    </ion-buttons>
+    <ion-buttons end style="padding-right: 5px">
+      <a button [href]="whatsApp">
+        <button ion-button icon-right><ion-icon name="logo-whatsapp"></ion-icon></button>
+      </a>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

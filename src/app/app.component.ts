@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
-import { Platform, MenuController, AlertController, ToastController, App, Events } from 'ionic-angular';
+import { Platform, MenuController, AlertController, ToastController, App, Events, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
-
 import { ConnectProvider } from '../providers/connect/connect';
 import { MenusPage } from '../pages/menus/menus';
 import { LoginPage } from '../pages/login/login';
+
+import { DatasaleseditPage } from '../pages/datasalesedit/datasalesedit'
+import { TabsdatacustomerPage } from '../pages/tabsdatacustomer/tabsdatacustomer'
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -22,6 +25,7 @@ export class MyApp {
     public alertCtrl: AlertController,
     public push: Push,
     public events: Events,
+    public modalCtrl: ModalController,
     public app: App,
     public connect: ConnectProvider,
     public toastCtrl : ToastController,
@@ -57,7 +61,34 @@ export class MyApp {
 
     pushObject.on('notification').subscribe((notification: any) =>{
       if (localStorage.getItem('userData')) {
-
+        switch(notification.additionalData.function) {
+          case "createDataSales":
+            let confirmAlert = this.alertCtrl.create({
+              title: 'Notification',
+              message: notification.message,
+              buttons: [{
+                text: 'Ignore',
+                role: 'cancel'
+              },{
+                text: 'View',
+                handler: () => {
+                  let profileModal = this.modalCtrl.create(DatasaleseditPage,{
+                    item: notification.additionalData.item,
+                    history: false
+                  });
+                  profileModal.onDidDismiss(data => {
+                    if (data) {
+                      this.pushToDataSales()
+                    }
+                  });
+                  profileModal.present();
+                }
+              }]
+            });
+            confirmAlert.present();
+            break;
+          default:
+        }
       }
     });
 
@@ -81,6 +112,12 @@ export class MyApp {
 
     pushObject.on('error').subscribe(error => {
       this.presentToast("Device Problem, Please restart Device");
+    });
+  }
+
+  pushToDataSales(){
+    this.app.getRootNav().push(TabsdatacustomerPage,{
+      index: 1
     });
   }
 

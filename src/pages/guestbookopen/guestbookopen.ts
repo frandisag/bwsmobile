@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController, Navbar, LoadingController, ToastController, App, Events } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController, Navbar, LoadingController, ToastController, App, Events, AlertController } from 'ionic-angular';
 
 import { GuestbookaddPage } from '../guestbookadd/guestbookadd'
 import { GuestbookeditPage } from '../guestbookedit/guestbookedit'
@@ -37,6 +37,7 @@ export class GuestbookopenPage {
     public loadingCtrl: LoadingController,
     public connect: ConnectProvider,
     public toastController: ToastController,
+    public alertCtrl: AlertController,
     public events: Events,
     public app: App,
     public navParams: NavParams) {
@@ -46,9 +47,11 @@ export class GuestbookopenPage {
   presentToast(msg) {
     let toast = this.toastController.create({
       message: msg,
-      duration: 2000,
-      position: 'top',
-      dismissOnPageChange: true
+      duration: 5000,
+      position: 'middle',
+      dismissOnPageChange: true,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
     });
     toast.present();
   }
@@ -109,7 +112,8 @@ export class GuestbookopenPage {
     const update = {
       'id': item.id,
       'hasil': 'DEAL',
-      'token': this.param.token
+      'token': this.param.token,
+      'reason_no_deal': ''
     }
     let loadingPopup = this.loadingCtrl.create({
       content: 'Loading data...'
@@ -146,11 +150,37 @@ export class GuestbookopenPage {
     })
   }
 
-  nodeal(item){
+  setReason(item){
+    let alert = this.alertCtrl.create({
+      title: 'Note',
+      inputs: [{ name: 'reason_no_deal', placeholder: 'Note' }],
+      buttons: [
+        { text: 'Cancel', role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            if(data.reason_no_deal != ''){
+              this.nodeal(item, data.reason_no_deal);
+            }else{
+              this.presentToast('Please Fill No Deal Note');
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  nodeal(item,reason_no_deal){
     const update = {
       'id': item.id,
       'hasil': 'NO DEAL',
-      'token': this.param.token
+      'token': this.param.token,
+      'reason_no_deal': reason_no_deal
     }
     let loadingPopup = this.loadingCtrl.create({
       content: 'Loading data...'

@@ -1,7 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Navbar, ViewController, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Navbar, ViewController, ToastController, LoadingController, Platform } from 'ionic-angular';
 
 import { ConnectProvider } from '../../providers/connect/connect';
+import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path';
+import { Camera } from '@ionic-native/camera';
+
+declare var cordova: any;
 
 @Component({
   selector: 'page-tabsprofile',
@@ -16,6 +21,7 @@ export class TabsprofilePage {
     "id": 0
   }
 
+  public unregisterBackButtonAction: any;
   responseData: any;
   userProfile = {
     'email':'',
@@ -28,8 +34,12 @@ export class TabsprofilePage {
     public navCtrl: NavController,
     public toastController: ToastController,
     public connect: ConnectProvider,
+    public platform: Platform,
     public loadingCtrl: LoadingController,
     public viewCtrl: ViewController,
+    public camera: Camera,
+    private file: File,
+    private filePath: FilePath,
     public navParams: NavParams) {
     this.init()
   }
@@ -69,7 +79,44 @@ export class TabsprofilePage {
   }
 
   editimage(){
-    console.log('change image')
+    var options = {
+      quality: 50,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum: false,
+      correctOrientation: true
+    };
+    this.camera.getPicture(options).then((imagePath) => {
+      this.filePath.resolveNativePath(imagePath)
+        .then(filePath => {
+          let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+          let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+          let newName = this.createFileName();
+
+          this.file.copyFile(correctPath, currentName, cordova.file.externalApplicationStorageDirectory, newName).then(success => {
+            this.userProfile.foto_profile = cordova.file.externalApplicationStorageDirectory + newName;
+
+            let loadingPopup = this.loadingCtrl.create({
+              content: 'Loading data...'
+            });
+            loadingPopup.present();
+            setTimeout(() => {
+              loadingPopup.dismiss();
+            }, 5000);
+          }, error => {
+            this.presentToast('Error while storing file.');
+          });
+
+        });
+    }, (err) => {
+      //this.presentToast('Error while selecting image.');
+    });
+  }
+
+  createFileName() {
+    var d = new Date(),
+    n = d.getTime(),
+    newFileName =  n + ".jpg";
+    return newFileName;
   }
 
   save(){
@@ -79,11 +126,34 @@ export class TabsprofilePage {
   presentToast(msg) {
     let toast = this.toastController.create({
       message: msg,
-      duration: 2000,
-      position: 'top',
-      dismissOnPageChange: true
+      duration: 5000,
+      position: 'bottom',
+      dismissOnPageChange: true,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
     });
     toast.present();
+  }
+
+  ionViewDidEnter() {
+    this.initializeBackButtonCustomHandler();
+  }
+
+  ionViewWillLeave() {
+    this.unregisterBackButtonAction && this.unregisterBackButtonAction();
+  }
+
+  public initializeBackButtonCustomHandler(): void {
+    this.unregisterBackButtonAction = this.platform.registerBackButtonAction(() => {
+        this.customHandleBackButton();
+    }, 10);
+  }
+
+  private customHandleBackButton(): void {
+    this.viewCtrl.dismiss({},"",{
+    	animate: true,
+    	animation: 'ios-transition'
+    });
   }
 
 }

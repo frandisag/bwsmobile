@@ -7,7 +7,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { Push } from '@ionic-native/push';
 import { IonicSelectableModule } from 'ionic-selectable'
+import { File } from '@ionic-native/file'
+import { FilePath } from '@ionic-native/file-path'
+import { FileTransfer } from '@ionic-native/file-transfer'
+import { Camera } from '@ionic-native/camera'
 import { SuperTabsModule } from 'ionic2-super-tabs';
+import { Vibration } from '@ionic-native/vibration'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -29,7 +34,6 @@ import { GuestbookclosedPage } from '../pages/guestbookclosed/guestbookclosed'
 import { DatasalesopenPage } from '../pages/datasalesopen/datasalesopen'
 import { DatasalesprosesPage } from '../pages/datasalesproses/datasalesproses'
 import { DatasalesclosedPage } from '../pages/datasalesclosed/datasalesclosed'
-import { DatasalesaddPage } from '../pages/datasalesadd/datasalesadd'
 import { DatasaleseditPage } from '../pages/datasalesedit/datasalesedit'
 import { SetfilterPage } from '../pages/setfilter/setfilter'
 
@@ -55,7 +59,6 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     DatasalesopenPage,
     DatasalesprosesPage,
     DatasalesclosedPage,
-    DatasalesaddPage,
     DatasaleseditPage
   ],
   imports: [
@@ -88,13 +91,17 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     DatasalesopenPage,
     DatasalesprosesPage,
     DatasalesclosedPage,
-    DatasalesaddPage,
     DatasaleseditPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    File,
+    FilePath,
+    FileTransfer,
+    Camera,
     Push,
+    Vibration,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ConnectProvider
   ]

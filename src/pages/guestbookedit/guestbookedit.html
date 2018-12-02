@@ -142,79 +142,79 @@
     </ion-slide>
 
     <ion-slide>
-        <ion-list no-line padding style="padding-top: 0px">
-          <form style="padding-top: 0px" [formGroup]="slideThreeForm">
+      <ion-list no-line padding style="padding-top: 0px">
+        <form style="padding-top: 0px" [formGroup]="slideThreeForm">
 
-            <ion-label stacked text-left>Nama Provinsi :</ion-label>
-          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
-            <ion-label><span style="display: none; width: 10px">Nama Provinsi</span></ion-label>
-            <ionic-selectable
-              item-content
-              formControlName="nama_provinsi"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="listProvinsi"
-              [canSearch]="true"
-              (onChange)="provinsiChange($event)"
-              [isMultiple]="false">
-            </ionic-selectable>
-          </ion-item>
+          <ion-label stacked text-left>Nama Provinsi :</ion-label>
+        <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+          <ion-label><span style="display: none; width: 10px">Nama Provinsi</span></ion-label>
+          <ionic-selectable
+            item-content
+            formControlName="nama_provinsi"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="listProvinsi"
+            [canSearch]="true"
+            (onChange)="provinsiChange($event)"
+            [isMultiple]="false">
+          </ionic-selectable>
+        </ion-item>
 
-          <ion-label stacked text-left>Nama Kabupaten :</ion-label>
-          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
-            <ion-label><span style="display: none;">Nama Kabupaten</span></ion-label>
-            <ionic-selectable
-              item-content
-              text-wrap
-              formControlName="nama_kabupaten"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="listKabupaten"
-              [canSearch]="true"
-              (onChange)="kabupatenChange($event)"
-              [isMultiple]="false">
-            </ionic-selectable>
-          </ion-item>
+        <ion-label stacked text-left>Nama Kabupaten :</ion-label>
+        <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+          <ion-label><span style="display: none;">Nama Kabupaten</span></ion-label>
+          <ionic-selectable
+            item-content
+            text-wrap
+            formControlName="nama_kabupaten"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="listKabupaten"
+            [canSearch]="true"
+            (onChange)="kabupatenChange($event)"
+            [isMultiple]="false">
+          </ionic-selectable>
+        </ion-item>
 
-          <ion-label stacked text-left>Nama Kecamatan :</ion-label>
-          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
-            <ion-label><span style="display: none;">Nama Kecamatan</span></ion-label>
-            <ionic-selectable
-              item-content
-              text-wrap
-              formControlName="nama_kecamatan"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="listKecamatan"
-              [canSearch]="true"
-              (onChange)="kecamatanChange($event)"
-              [isMultiple]="false">
-            </ionic-selectable>
-          </ion-item>
+        <ion-label stacked text-left>Nama Kecamatan :</ion-label>
+        <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+          <ion-label><span style="display: none;">Nama Kecamatan</span></ion-label>
+          <ionic-selectable
+            item-content
+            text-wrap
+            formControlName="nama_kecamatan"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="listKecamatan"
+            [canSearch]="true"
+            (onChange)="kecamatanChange($event)"
+            [isMultiple]="false">
+          </ionic-selectable>
+        </ion-item>
 
-          <ion-label stacked text-left>Nama Kelurahan :</ion-label>
-          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
-            <ion-label><span style="display: none;">Nama Kelurahan</span></ion-label>
-            <ionic-selectable
-              item-content
-              text-wrap
-              formControlName="nama_desa"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="listDesa"
-              [canSearch]="true"
-              [isMultiple]="false">
-            </ionic-selectable>
-          </ion-item>
+        <ion-label stacked text-left>Nama Kelurahan :</ion-label>
+        <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+          <ion-label><span style="display: none;">Nama Kelurahan</span></ion-label>
+          <ionic-selectable
+            item-content
+            text-wrap
+            formControlName="nama_desa"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="listDesa"
+            [canSearch]="true"
+            [isMultiple]="false">
+          </ionic-selectable>
+        </ion-item>
 
-          <ion-label stacked text-left color="button">Nama Jalan :</ion-label>
-          <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
-            <ion-input block round type="text" placeholder="" formControlName="nama_jalan"></ion-input>
-          </ion-item>
+        <ion-label stacked text-left color="button">Nama Jalan :</ion-label>
+        <ion-item no-line style="border-bottom-color: #0066b1;" class="rounded">
+          <ion-input block round type="text" placeholder="" formControlName="nama_jalan"></ion-input>
+        </ion-item>
 
-          </form>
-        </ion-list>
-      </ion-slide>
+        </form>
+      </ion-list>
+    </ion-slide>
 
   </ion-slides>
 </ion-content>

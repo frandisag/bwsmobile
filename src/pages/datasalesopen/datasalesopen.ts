@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ModalController, ViewController, Navbar, LoadingController, ToastController, App, Events } from 'ionic-angular';
 
-import { DatasalesaddPage } from '../datasalesadd/datasalesadd'
 import { DatasaleseditPage } from '../datasalesedit/datasalesedit'
 import { SetfilterPage } from '../setfilter/setfilter'
 
@@ -61,7 +60,8 @@ export class DatasalesopenPage {
     });
     profileModal.onDidDismiss(data => {
       if (data) {
-      	this.init();
+        this.events.publish('refreshInitProses', 1);
+        this.init();
       }
     });
     profileModal.present();
@@ -88,6 +88,7 @@ export class DatasalesopenPage {
           if(this.responseData){
             this.listDataSales = this.responseData.data;
             this.param.last_page = this.responseData.last_page;
+            this.events.publish('refreshInitProses', 1);
             loadingPopup.dismiss();
           }else{
             loadingPopup.dismiss();
@@ -225,17 +226,6 @@ export class DatasalesopenPage {
       loadingPopup.dismiss();
       this.presentToast("Koneksi Bermasalah");
     })
-  }
-
-  add(){
-    let profileModal = this.modalCtrl.create(DatasalesaddPage);
-    profileModal.onDidDismiss(data => {
-      if (data) {
-        this.events.publish('addDataSalesOpen', 1);
-      	this.init();
-      }
-    });
-    profileModal.present();
   }
 
 }

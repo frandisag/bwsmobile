@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Navbar, ViewController } from 'ionic-angular';
+import { NavController, NavParams, Navbar, ViewController, Platform } from 'ionic-angular';
 
 import { GuestbookopenPage } from '../../pages/guestbookopen/guestbookopen'
 import { GuestbookclosedPage } from '../../pages/guestbookclosed/guestbookclosed'
@@ -16,12 +16,14 @@ export class TabsguestbookPage {
   page1: any = GuestbookopenPage;
   page2: any = GuestbookclosedPage;
 
+  public unregisterBackButtonAction: any;
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
+    public platform: Platform,
     public superTabsCtrl: SuperTabsController,
     public navParams: NavParams) {
-    this.init()
   }
 
   ionViewDidLoad() {
@@ -34,8 +36,26 @@ export class TabsguestbookPage {
     };
   }
 
-  init(){
-    console.log('tabs guest book')
+  ionViewDidEnter() {
+    this.initializeBackButtonCustomHandler();
+  }
+
+  ionViewWillLeave() {
+    // Unregister the custom back button action for this page
+    this.unregisterBackButtonAction && this.unregisterBackButtonAction();
+  }
+
+  public initializeBackButtonCustomHandler(): void {
+    this.unregisterBackButtonAction = this.platform.registerBackButtonAction(() => {
+        this.customHandleBackButton();
+    }, 10);
+  }
+
+  private customHandleBackButton(): void {
+    this.viewCtrl.dismiss({},"",{
+    	animate: true,
+    	animation: 'ios-transition'
+    });
   }
 
 }
