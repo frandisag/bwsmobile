@@ -47,7 +47,7 @@ export class LoginPage {
           this.log = false;
         }
       }, (err) => {
-        this.presentToast(err);
+        this.presentToast("Salah Email atau Password");
         this.log = false;
       });
     }else{

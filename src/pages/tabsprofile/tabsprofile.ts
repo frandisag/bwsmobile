@@ -16,18 +16,15 @@ export class TabsprofilePage {
 
   @ViewChild(Navbar) navBar:Navbar;
 
-  param = {
-    "token":"",
-    "id": 0
-  }
-
   public unregisterBackButtonAction: any;
   responseData: any;
   userProfile = {
     'email':'',
     'nama_sales':'',
     'no_telepon':'',
-    'foto_profile': ''
+    'foto_profile': '',
+    'token': '',
+    'id': 0
   };
 
   constructor(
@@ -60,15 +57,15 @@ export class TabsprofilePage {
     loadingPopup.present();
   	const localdata = JSON.parse(localStorage.getItem('userData'));
 
-    this.param.token = localdata.userData.token;
-    this.param.id = localdata.userData.id;
-    this.connect.getData(this.param.token, `getProfile?sales_id=${this.param.id}`).then((result) =>{
+    this.userProfile.token = localdata.userData.token;
+    this.userProfile.id = localdata.userData.id;
+    this.connect.getData(this.userProfile.token, `getProfile?sales_id=${this.userProfile.id}`).then((result) =>{
       this.responseData = result;
 
       if(this.responseData.userData){
         this.userProfile = this.responseData.userData
         if(this.userProfile.foto_profile != ''){
-          this.userProfile.foto_profile = `http://bws.com/storage/${this.userProfile.foto_profile}`
+          this.userProfile.foto_profile = `http://sales.bintangmotor.com/storage/${this.userProfile.foto_profile}`
         }
       }
       loadingPopup.dismiss();
@@ -81,8 +78,8 @@ export class TabsprofilePage {
   editimage(){
     var options = {
       quality: 50,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum: false,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      saveToPhotoAlbum: true,
       correctOrientation: true
     };
     this.camera.getPicture(options).then((imagePath) => {
@@ -94,14 +91,7 @@ export class TabsprofilePage {
 
           this.file.copyFile(correctPath, currentName, cordova.file.externalApplicationStorageDirectory, newName).then(success => {
             this.userProfile.foto_profile = cordova.file.externalApplicationStorageDirectory + newName;
-
-            let loadingPopup = this.loadingCtrl.create({
-              content: 'Loading data...'
-            });
-            loadingPopup.present();
-            setTimeout(() => {
-              loadingPopup.dismiss();
-            }, 5000);
+            //alert(this.userProfile.foto_profile);
           }, error => {
             this.presentToast('Error while storing file.');
           });
@@ -120,7 +110,20 @@ export class TabsprofilePage {
   }
 
   save(){
-    console.log('save')
+    let loadingPopup = this.loadingCtrl.create({
+      content: 'Loading data...'
+    });
+    loadingPopup.present();
+    const localdata = JSON.parse(localStorage.getItem('userData'));
+    this.userProfile.token = localdata.userData.token;
+    this.userProfile.id = localdata.userData.id;
+    this.connect.postData(this.userProfile, 'updateProfile').then((result) => {
+      loadingPopup.dismiss();
+      this.presentToast('Sukses Update');
+    }, (err) => {
+      this.presentToast('Koneksi Bermasalah');
+      loadingPopup.dismiss();
+    });
   }
 
   presentToast(msg) {

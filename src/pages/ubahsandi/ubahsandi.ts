@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController} from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController} from 'ionic-angular';
 
 import { ConnectProvider } from '../../providers/connect/connect';
 
@@ -21,7 +21,7 @@ export class UbahsandiPage {
 		"sandibaru1":"",
 		"sandibaru2":"",
 		"token":"",
-		"EmployeeId":""
+		"id":""
 
 	}
 
@@ -30,13 +30,10 @@ export class UbahsandiPage {
 
   constructor(
   	public navCtrl: NavController,
-  	public toastController: ToastController,
+    public toastController: ToastController,
+    public loadingCtrl: LoadingController,
   	public connect: ConnectProvider,
   	public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UbahsandiPage');
   }
 
   simpan(){
@@ -45,18 +42,23 @@ export class UbahsandiPage {
   			const data =  JSON.parse(localStorage.getItem('userData'));
       	this.userDetails = data.userData;
 
-      	this.param.EmployeeId = this.userDetails.EmployeeId;
+      	this.param.id = this.userDetails.id;
       	this.param.token = this.userDetails.token;
-
-	  		this.connect.postData(this.param, "changepassword").then((result) =>{
+        let loadingPopup = this.loadingCtrl.create({
+          content: 'Loading data...'
+        });
+        loadingPopup.present();
+	  		this.connect.postData(this.param, "changePassword").then((result) =>{
 	        this.responseData = result;
-	        console.log(this.responseData);
 	        if(!this.responseData.success){
-	          this.presentToast(this.responseData.error.text);
+            loadingPopup.dismiss();
+	          this.presentToast("Kata Sandi Lama Salah");
 	        }else{
-	        	this.presentToast(this.responseData.success.text);
+            loadingPopup.dismiss();
+	        	this.presentToast("Sukses Update");
 	        }
 	      }, (err) => {
+          loadingPopup.dismiss();
 	        this.presentToast("Koneksi Bermasalah");
 	      });
 	  	}else{
