@@ -98,6 +98,7 @@ export class DatasaleseditPage {
 
     this.slideOneForm = this.formBuilder.group({
       tanggal_datang_show: [{value: new Date().toISOString(),disabled: true}],
+      target_fu: [{value: new Date().toISOString(),disabled: false}],
       nama_konsumen_show: [{value: '', disabled: true},Validators.required],
       noHp1_show: [{value: '', disabled: true},Validators.required],
       cara_bayar_show: [{value: '', disabled: true},Validators.required],
@@ -148,6 +149,7 @@ export class DatasaleseditPage {
             source_name: this.guestData.source.source_name,
           },
           tanggal_datang: this.guestData.tanggal_datang,
+          target_fu: this.guestData.target_fu,
           nama_konsumen: this.guestData.nama_konsumen,
           noHp1: this.guestData.noHp1,
           cara_bayar: this.guestData.cara_bayar,
@@ -263,6 +265,7 @@ export class DatasaleseditPage {
     else {
       const sendData = {
         'tanggal_datang': this.slideOneForm.value.tanggal_datang,
+        'target_fu': this.slideOneForm.value.target_fu,
         'nama_konsumen': this.slideOneForm.value.nama_konsumen,
         'noHp1': this.slideOneForm.value.noHp1,
         'cara_bayar': this.slideOneForm.value.cara_bayar,

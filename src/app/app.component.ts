@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, MenuController, AlertController, ToastController, App, Events, ModalController } from 'ionic-angular';
+import { Platform, MenuController, AlertController, ToastController, App, Events, ModalController, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -17,6 +17,7 @@ import { TabsdatacustomerPage } from '../pages/tabsdatacustomer/tabsdatacustomer
 })
 export class MyApp {
   rootPage;
+  responseData;
 
   constructor(
     platform: Platform,
@@ -25,6 +26,7 @@ export class MyApp {
     public alertCtrl: AlertController,
     public push: Push,
     public events: Events,
+    public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public app: App,
     public connect: ConnectProvider,
@@ -72,16 +74,31 @@ export class MyApp {
               },{
                 text: 'View',
                 handler: () => {
-                  let profileModal = this.modalCtrl.create(DatasaleseditPage,{
-                    item: notification.additionalData.item,
-                    history: false
+                  const localdata = JSON.parse(localStorage.getItem('userData'));
+                  const update = {
+                    'id': notification.additionalData.item.id,
+                    'hasil': 'OPEN',
+                    'target_fu': new Date().toJSON().slice(0,10),
+                    'token': localdata.userData.token,
+                    'sales_id': localdata.userData.id
+                  }
+                  let loadingPopup = this.loadingCtrl.create({
+                    content: 'Loading data...'
                   });
-                  profileModal.onDidDismiss(data => {
-                    if (data) {
-                      this.pushToDataSales()
+                  loadingPopup.present();
+                  this.connect.postData(update,'changeDataSales').then(data=>{
+                    this.responseData = data;
+                    if(this.responseData.success){
+                      loadingPopup.dismiss();
+                      this.pushToDataSales();
+                    }else{
+                      loadingPopup.dismiss();
+                      this.presentToast(`Already Response by : ${this.responseData.nama_sales}`)
                     }
-                  });
-                  profileModal.present();
+                  },(err)=>{
+                    loadingPopup.dismiss();
+                    this.presentToast("Koneksi Bermasalah");
+                  })
                 }
               }]
             });

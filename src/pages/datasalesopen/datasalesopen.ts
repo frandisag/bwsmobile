@@ -71,6 +71,7 @@ export class DatasalesopenPage {
     const update = {
       'id': item.id,
       'hasil': 'OPEN',
+      'target_fu': new Date().toJSON().slice(0,10),
       'token': this.param.token,
       'sales_id': this.param.id
     }
