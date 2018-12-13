@@ -9,7 +9,6 @@ import { ConnectProvider } from '../providers/connect/connect';
 import { MenusPage } from '../pages/menus/menus';
 import { LoginPage } from '../pages/login/login';
 
-import { DatasaleseditPage } from '../pages/datasalesedit/datasalesedit'
 import { TabsdatacustomerPage } from '../pages/tabsdatacustomer/tabsdatacustomer'
 
 @Component({
