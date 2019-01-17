@@ -71,7 +71,7 @@ export class MyApp {
                 text: 'Ignore',
                 role: 'cancel'
               },{
-                text: 'View',
+                text: 'Accept',
                 handler: () => {
                   const localdata = JSON.parse(localStorage.getItem('userData'));
                   const update = {
