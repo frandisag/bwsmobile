@@ -30,7 +30,7 @@
     "@ionic-native/status-bar": "~4.15.0",
     "@ionic-native/vibration": "^4.18.0",
     "@ionic/storage": "2.2.0",
-    "cordova-android": "7.1.2",
+    "cordova-android": "7.1.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
@@ -81,8 +81,8 @@
       "cordova-plugin-vibration": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

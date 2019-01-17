@@ -72,7 +72,7 @@ export class HomePage {
       loadingPopup.dismiss();
       localStorage.removeItem('userData');
       this.app.getRootNav().setRoot(LoginPage);
-      this.presentToast("Koneksi Bermasalah");
+      this.presentToast("Session time out, Please Login again");
     });
   }
 
