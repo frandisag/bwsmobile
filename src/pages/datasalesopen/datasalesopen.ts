@@ -1,5 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController, Navbar, LoadingController, ToastController, App, Events } from 'ionic-angular';
+import {
+  NavController,
+  NavParams,
+  ModalController,
+  ViewController,
+  Navbar,
+  LoadingController,
+  ToastController,
+  App,
+  Events,
+} from 'ionic-angular';
 
 import { DatasaleseditPage } from '../datasalesedit/datasalesedit'
 import { SetfilterPage } from '../setfilter/setfilter'

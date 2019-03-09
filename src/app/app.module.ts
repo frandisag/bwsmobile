@@ -30,6 +30,8 @@ import { GuestfollowupPage } from '../pages/guestfollowup/guestfollowup'
 import { GuestfollowupaddPage } from "../pages/guestfollowupadd/guestfollowupadd";
 import { GuestbookopenPage } from '../pages/guestbookopen/guestbookopen'
 import { GuestbookclosedPage } from '../pages/guestbookclosed/guestbookclosed'
+import { ListmotorPage } from "../pages/listmotor/listmotor";
+import { MotordetailPage } from "../pages/motordetail/motordetail";
 
 import { DatasalesopenPage } from '../pages/datasalesopen/datasalesopen'
 import { DatasalesprosesPage } from '../pages/datasalesproses/datasalesproses'
@@ -59,7 +61,9 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     DatasalesopenPage,
     DatasalesprosesPage,
     DatasalesclosedPage,
-    DatasaleseditPage
+    DatasaleseditPage,
+    ListmotorPage,
+    MotordetailPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +95,9 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     DatasalesopenPage,
     DatasalesprosesPage,
     DatasalesclosedPage,
-    DatasaleseditPage
+    DatasaleseditPage,
+    ListmotorPage,
+    MotordetailPage
   ],
   providers: [
     StatusBar,

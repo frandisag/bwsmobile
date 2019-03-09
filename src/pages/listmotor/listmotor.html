@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar color="primary" hideBackButton="{{isSearchBarOpened}}">
+      <ion-title *ngIf="!isSearchBarOpened">
+        {{leasing.leasing_name}}
+      </ion-title>
+      <ion-searchbar
+        *ngIf="isSearchBarOpened"
+        showCancelButton="true"
+        (ionChange)="onSearch($event)"
+        (ionCancel)="onCancel()"
+      >
+      </ion-searchbar>
+      <ion-buttons end>
+        <button
+          ion-button
+          icon-only
+          *ngIf="!isSearchBarOpened"
+          (tap)="isSearchBarOpened=true"
+        >
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles">
+      </ion-refresher-content>
+    </ion-refresher>
+    <ion-list *ngIf="listDataMotorCabang">
+      <ion-item *ngFor="let item of listDataMotorCabang">
+        <h2 style="color: #0066b1;" text-left (tap)="opendetail(item)"><b>{{item.motor_name}}</b></h2>
+        <p (tap)="opendetail(item)">Rp. {{item.price | number: '1.0-0'}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
