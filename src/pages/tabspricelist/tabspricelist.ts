@@ -9,6 +9,8 @@ export class TabspricelistPage {
 
   @ViewChild(Navbar) navBar:Navbar;
 
+  isSearchBarOpened = false;
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,

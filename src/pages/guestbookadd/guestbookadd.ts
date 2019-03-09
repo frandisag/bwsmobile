@@ -127,7 +127,7 @@ export class GuestbookaddPage {
     this.slideTwoForm = this.formBuilder.group({
       email_konsumen: [''],
       tempat_lahir: [''],
-      tanggal_lahir: new Date().toISOString(),
+      tanggal_lahir: [''],
       noHp2: ['']
     });
     this.slideThreeForm = this.formBuilder.group({

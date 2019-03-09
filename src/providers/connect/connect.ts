@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-let apiUrl = "https://sales.bintangmotor.com/api/";
-//let apiUrl = "http://bws.com/api/";
-//let apiUrl = "http://localhost:8000/api/";
+// const apiUrl = "https://sales.bintangmotor.com/api/";
+// const apiUrl = "http://bws.com/api/";
+const apiUrl = "http://127.0.0.1:8000/api/";
 
 @Injectable()
 export class ConnectProvider {

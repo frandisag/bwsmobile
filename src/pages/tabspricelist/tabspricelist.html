@@ -1,9 +1,26 @@
 <ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>Price List</ion-title>
+  <ion-navbar color="primary" hideBackButton="{{isSearchBarOpened}}">
+    <ion-title *ngIf="!isSearchBarOpened">
+      Price List
+    </ion-title>
+    <ion-searchbar
+      *ngIf="isSearchBarOpened"
+      showCancelButton="true"
+      (search)="onSearch($event)"
+      (ionCancel)="isSearchBarOpened=false"
+    >
+    </ion-searchbar>
+    <ion-buttons end>
+      <button
+        ion-button
+        icon-only
+        *ngIf="!isSearchBarOpened"
+        (tap)="isSearchBarOpened=true"
+      >
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
