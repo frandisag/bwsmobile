@@ -1,12 +1,36 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{motor.motor_name}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <div class="header-banner">
+    <ion-slides class="home-slide" autoplay="3000" loop *ngIf="listPictures">
+      <ion-slide *ngFor="let item of listPictures">
+        <img src="http://sales.bintangmotor.com/storage/{{item}}" alt="">
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="content-load">
+    <form style="padding-top: 0px">
+      <ion-label stacked text-left color="button" padding>Harga OTR :</ion-label>
+      <ion-item no-line class="rounded">
+        <ion-input
+          block
+          round
+          type="text"
+          placeholder=""
+          text-center
+          value="Rp. {{motor.price | number: '1.0-0' }}"
+        >
+        </ion-input>
+      </ion-item>
+      <br>
+      <button ion-button block round color="button" (tap)="downloadbrosur()">
+        <ion-label *ngIf="!startDownload">&nbsp;Download Brosur</ion-label>
+        <ion-spinner class="spinner-energized" *ngIf="startDownload"></ion-spinner>
+      </button>
+    </form>
+  </div>
 </ion-content>

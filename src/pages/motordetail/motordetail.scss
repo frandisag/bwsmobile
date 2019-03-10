@@ -1,3 +1,19 @@
 page-motordetail {
+  .header-banner{
+		height: 300px;
+		min-height: 300px;
+		background: white;
+	}
 
+	.slide-zoom {
+		height: 100%;
+  }
+
+  ion-slides {
+    height: 300px;
+  }
+  .content-load {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }

@@ -12,7 +12,7 @@ import { FilePath } from '@ionic-native/file-path'
 import { FileTransfer } from '@ionic-native/file-transfer'
 import { Camera } from '@ionic-native/camera'
 import { SuperTabsModule } from 'ionic2-super-tabs';
-import { Vibration } from '@ionic-native/vibration'
+import { Vibration } from '@ionic-native/vibration';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -109,7 +109,7 @@ import { SetfilterPage } from '../pages/setfilter/setfilter'
     Push,
     Vibration,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ConnectProvider
+    ConnectProvider,
   ]
 })
 export class AppModule {}

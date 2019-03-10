@@ -7,7 +7,6 @@ import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
 declare var cordova: any;
-
 @Component({
   selector: 'page-tabsprofile',
   templateUrl: 'tabsprofile.html',
@@ -64,7 +63,7 @@ export class TabsprofilePage {
 
       if(this.responseData.userData){
         this.userProfile = this.responseData.userData
-        if(this.userProfile.foto_profile != ''){
+        if(this.userProfile.foto_profile != "null"){
           this.userProfile.foto_profile = `http://sales.bintangmotor.com/storage/${this.userProfile.foto_profile}`
         }
       }
@@ -78,7 +77,7 @@ export class TabsprofilePage {
   editimage(){
     var options = {
       quality: 50,
-      sourceType: this.camera.PictureSourceType.CAMERA,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       saveToPhotoAlbum: true,
       correctOrientation: true
     };
@@ -91,14 +90,14 @@ export class TabsprofilePage {
 
           this.file.copyFile(correctPath, currentName, cordova.file.externalApplicationStorageDirectory, newName).then(success => {
             this.userProfile.foto_profile = cordova.file.externalApplicationStorageDirectory + newName;
-            //alert(this.userProfile.foto_profile);
-          }, error => {
-            this.presentToast('Error while storing file.');
+          }, (errcopy) => {
+            this.presentToast('Tidak dapat menyimpan file');
           });
-
+        }, (errpath) => {
+          // this.presentToast(errpath);
         });
     }, (err) => {
-      //this.presentToast('Error while selecting image.');
+      // this.presentToast(err);
     });
   }
 

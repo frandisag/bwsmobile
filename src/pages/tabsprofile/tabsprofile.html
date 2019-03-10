@@ -12,11 +12,11 @@
 
 <ion-content padding>
   <div text-center padding-top class="profile-image" (tap)="editimage()">
-    <img *ngIf="userProfile.foto_profile === ''" style="text-align: center;" src="assets/imgs/chatterplace.png" >
-    <img *ngIf="userProfile.foto_profile !== ''" style="text-align: center;" [src]="userProfile.foto_profile" >
+    <img *ngIf="userProfile.foto_profile === 'null'" style="text-align: center;" src="assets/imgs/chatterplace.png" >
+    <img *ngIf="userProfile.foto_profile !== 'null'" style="text-align: center;" src="{{userProfile.foto_profile}}" >
   </div>
   <div text-center>
-    Tap on your pic to change it.
+    <!-- Tap on your pic to change it. -->
   </div>
   <ion-label stacked text-left color="button">Email :</ion-label>
   <ion-item no-line class="rounded">
